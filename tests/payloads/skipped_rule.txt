@@ -1,0 +1,4 @@
+Test Case #1
+Name: "Rule Name"
+  PASS Rules:
+    Rule: Expected = SKIP, Evaluated = SKIP

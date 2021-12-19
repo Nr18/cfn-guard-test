@@ -1,0 +1,22 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: detect-aws-credentials
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 21.7b0
+    hooks:
+      - id: black
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Check pytest unit tests pass
+        entry: poetry run pytest --cov --mypy
+        pass_filenames: false
+        language: system
+        types: [python]

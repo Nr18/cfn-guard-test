@@ -1,0 +1,54 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+template: |
+  # What's Changed
+
+  $CHANGES
+
+  **See changes**: https://github.com/Nr18/cfn-guard-test/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+categories:
+  - title: '⚠️ Breaking'
+    label: 'breaking'
+  - title: '🚀 Features'
+    label: 'feature'
+  - title: '🐛 Bug Fixes'
+    label: 'bug'
+  - title: '🧰 Maintenance'
+    label: 'maintenance'
+  - title: '📚 Documentation'
+    label: 'documentation'
+
+version-resolver:
+  major:
+    labels:
+      - 'breaking'
+  minor:
+    labels:
+      - 'feature'
+  patch:
+    labels:
+      - 'bug'
+      - 'maintenance'
+      - 'documentation'
+
+autolabeler:
+  - label: 'feature'
+    title:
+      - '/feat:/i'
+  - label: 'documentation'
+    title:
+      - '/docs:/i'
+  - label: 'bug'
+    title:
+      - '/fix:/i'
+  - label: 'maintenance'
+    title:
+      - '/chore:/i'
+      - '/refactor:/i'
+      - '/style:/i'
+      - '/test:/i'
+      - '/perf:/i'
+
+exclude-labels:
+  - 'skip-changelog'

@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "cfn-guard-test"
+version = "0.0.1"
+description = "cfn-guard-test is a wrapper for cfn-guard that allows you to run unit tests for your cfn-guard rules."
+authors = ["Joris Conijn <joris@conijnonline.nl>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+junit-xml = "^1.9"
+click = "^8.0.3"
+
+[tool.poetry.dev-dependencies]
+black = "^21.9b0"
+mypy = "^0.910"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pytest-mypy = "^0.8.1"
+toml = "^0.10.2"
+types-toml = "^0.10.1"
+twine = "^3.4.2"
+xenon = "^0.8.0"
+radon = "^5.1.0"
+
+[tool.poetry.scripts]
+cfn-guard-test = "cfn_guard_test:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

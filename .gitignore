@@ -1,0 +1,11 @@
+__pycache__
+.pytest_cache
+.mypy_cache
+.idea
+/reports
+*.egg-info
+dist
+.coverage
+sample-reports/*.xml
+rules
+tests/rules/
