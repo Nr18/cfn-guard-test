@@ -18,6 +18,17 @@ You can install the `cfn-guard-test` tool by running the following command:
 pip install cfn_guard_test
 ```
 
+### Installation in venv
+
+Typically, you would want to run your dependencies isolated. You can install [cfn-guard-test][cfn-guard-test] in a `venv`
+using the following commands:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install cfn_guard_test
+```
+
 ## Usage
 
 To use `cfn-guard-test` you just execute the following command:
@@ -42,7 +53,8 @@ the following command:
 
 ```bash
 cfn-guard-test \
-  --cfn-guard-path "/my/customm/path/cfn-guard"
+  --cfn-guard-path "/my/custom/path/cfn-guard"
 ```
 
-[cfn-guard]:  https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
+[cfn-guard]: https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
+[cfn-guard-test]: https://github.com/Nr18/cfn-guard-test "CloudFormation Guard Test"
