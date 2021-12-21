@@ -2,8 +2,8 @@ import glob
 import os
 import subprocess
 
-from cfn_guard_test.test_suite import TestSuite
-from cfn_guard_test.cfn_guard_reader import CfnGuardReportReader
+from cfn_guard_test.test_suite import CfnGuardTestSuite
+from cfn_guard_test.reader import CfnGuardReader
 
 
 class CfnGuardReportRunner:
@@ -30,8 +30,8 @@ class CfnGuardReportRunner:
 
         return rule_sets
 
-    def execute(self) -> TestSuite:
-        suite = TestSuite()
+    def execute(self) -> CfnGuardTestSuite:
+        suite = CfnGuardTestSuite()
 
         for rules_test_file, rules_file in self.__test_cases.items():
             response = subprocess.run(
@@ -45,6 +45,6 @@ class CfnGuardReportRunner:
                 ],
                 stdout=subprocess.PIPE,
             )
-            CfnGuardReportReader(suite, rules_file, response.stdout)
+            CfnGuardReader(suite, rules_file, response.stdout)
 
         return suite

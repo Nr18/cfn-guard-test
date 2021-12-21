@@ -1,8 +1,8 @@
 from typing import List
-from cfn_guard_test.rule_result import RuleResult
+from cfn_guard_test.rule import CfnGuardRule
 
 
-class TestCase:
+class CfnGuardTestCase:
     """
     Understands a cfn-guard test case
     """
@@ -10,7 +10,7 @@ class TestCase:
     __ruleset: str
     __name: str
     __number: int
-    __rules: List[RuleResult]
+    __rules: List[CfnGuardRule]
 
     def __init__(self, ruleset: str, name: str, number: int) -> None:
         self.__ruleset = ruleset
@@ -18,7 +18,7 @@ class TestCase:
         self.__number = number
         self.__rules = []
 
-    def rule_result(self, rule: RuleResult) -> None:
+    def rule_result(self, rule: CfnGuardRule) -> None:
         self.__rules.append(rule)
 
     @property
@@ -40,9 +40,9 @@ class TestCase:
         return len(rules) if rules else 0
 
     @property
-    def failed_rules(self) -> List[RuleResult]:
+    def failed_rules(self) -> List[CfnGuardRule]:
         return list(filter(lambda case: case.failed, self.__rules))
 
     @property
-    def passed_rules(self) -> List[RuleResult]:
+    def passed_rules(self) -> List[CfnGuardRule]:
         return list(filter(lambda case: case.passed, self.__rules))

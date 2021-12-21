@@ -1,18 +1,18 @@
 from typing import List
-from cfn_guard_test.test_case import TestCase
+from cfn_guard_test.test_case import CfnGuardTestCase
 
 
-class TestSuite:
+class CfnGuardTestSuite:
     """
     Understands a cfn-guard test suite.
     """
 
-    __cases: List[TestCase]
+    __cases: List[CfnGuardTestCase]
 
     def __init__(self) -> None:
         self.__cases = []
 
-    def case_result(self, case: TestCase) -> None:
+    def case_result(self, case: CfnGuardTestCase) -> None:
         self.__cases.append(case)
 
     @property
@@ -34,5 +34,5 @@ class TestSuite:
         return failed
 
     @property
-    def failed_cases(self) -> List[TestCase]:
+    def failed_cases(self) -> List[CfnGuardTestCase]:
         return list(filter(lambda case: case.failed, self.__cases))
