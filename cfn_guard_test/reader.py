@@ -24,7 +24,7 @@ class CfnGuardReader:
             return None
 
         case_number = self.__get_case_number(test_case)
-        case_name = self.__get_cane_name(test_case)
+        case_name = self.__get_case_name(test_case)
 
         if case_number and case_name:
             case = CfnGuardTestCase(self.__rule_name, case_name, case_number)
@@ -37,7 +37,7 @@ class CfnGuardReader:
         return int(match.group(1)) if match else None
 
     @staticmethod
-    def __get_cane_name(test_case: str) -> Optional[str]:
+    def __get_case_name(test_case: str) -> Optional[str]:
         match = re.search(r"Name: \"(.*)\"", test_case, re.MULTILINE)
         return match.group(1) if match else None
 

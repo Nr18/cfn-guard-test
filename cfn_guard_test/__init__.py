@@ -2,7 +2,7 @@ from typing import Optional
 
 import click
 
-from cfn_guard_test.runner import CfnGuardReportRunner
+from cfn_guard_test.runner import CfnGuardRunner
 from cfn_guard_test.test_case import CfnGuardTestCase
 from cfn_guard_test.test_suite import CfnGuardTestSuite
 from cfn_guard_test.reader import CfnGuardReader
@@ -39,7 +39,7 @@ def main(rules_path: str, test_path: str, cfn_guard_path: str) -> None:
 
     This tool allows you to easily run your cfn-guard tests against your cfn-guard rules.
     """
-    runner = CfnGuardReportRunner(
+    runner = CfnGuardRunner(
         cfn_guard_path=cfn_guard_path, rules_path=rules_path, test_path=test_path
     )
     suite = runner.execute()

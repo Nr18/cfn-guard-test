@@ -6,7 +6,7 @@ from cfn_guard_test.test_suite import CfnGuardTestSuite
 from cfn_guard_test.reader import CfnGuardReader
 
 
-class CfnGuardReportRunner:
+class CfnGuardRunner:
     """
     Understands how to execute cfn-guard.
     """
