@@ -1,19 +1,19 @@
 import re
 from typing import Optional, List
 
-from cfn_guard_test.test_suite import TestSuite
-from cfn_guard_test.test_case import TestCase
-from cfn_guard_test.rule_result import RuleResult
+from cfn_guard_test.test_suite import CfnGuardTestSuite
+from cfn_guard_test.test_case import CfnGuardTestCase
+from cfn_guard_test.rule import CfnGuardRule
 
 
-class CfnGuardReportReader:
+class CfnGuardReader:
     """
     Understands how to read the output of cfn-guard.
     """
 
     __rule_name: str
 
-    def __init__(self, suite: TestSuite, rule_name: str, report: bytes):
+    def __init__(self, suite: CfnGuardTestSuite, rule_name: str, report: bytes):
         self.__suite = suite
         self.__rule_name = rule_name
         sections = report.decode("utf-8").split("\n\n")
@@ -27,7 +27,7 @@ class CfnGuardReportReader:
         case_name = self.__get_cane_name(test_case)
 
         if case_number and case_name:
-            case = TestCase(self.__rule_name, case_name, case_number)
+            case = CfnGuardTestCase(self.__rule_name, case_name, case_number)
             list(map(case.rule_result, self.__get_rule_results(test_case)))
             self.__suite.case_result(case)
 
@@ -42,7 +42,7 @@ class CfnGuardReportReader:
         return match.group(1) if match else None
 
     @staticmethod
-    def __get_rule_results(test_case) -> List[RuleResult]:
+    def __get_rule_results(test_case) -> List[CfnGuardRule]:
         results = []
         matches = re.finditer(
             r"    (.*): Expected = ([A-Z]+), Evaluated = ([A-Z]+)",
@@ -52,6 +52,6 @@ class CfnGuardReportReader:
 
         for matchNum, match in enumerate(matches, start=1):
             rule = match.groups(matchNum)
-            results.append(RuleResult(rule[0], rule[1], rule[2]))
+            results.append(CfnGuardRule(rule[0], rule[1], rule[2]))
 
         return results

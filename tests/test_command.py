@@ -109,9 +109,9 @@ from cfn_guard_test import main
         ),
     ],
 )
-@patch("cfn_guard_test.cfn_guard_runner.subprocess.run")
-@patch("cfn_guard_test.cfn_guard_runner.glob.glob")
-@patch("cfn_guard_test.cfn_guard_runner.os.path.isfile")
+@patch("cfn_guard_test.runner.subprocess.run")
+@patch("cfn_guard_test.runner.glob.glob")
+@patch("cfn_guard_test.runner.os.path.isfile")
 def test_invoke(
     mock_isfile: MagicMock,
     mock_glob: MagicMock,

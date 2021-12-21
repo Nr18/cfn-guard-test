@@ -1,4 +1,4 @@
-class RuleResult:
+class CfnGuardRule:
     """
     Understands the outcome of a specific rule.
     """

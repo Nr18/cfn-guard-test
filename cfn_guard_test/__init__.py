@@ -2,10 +2,10 @@ from typing import Optional
 
 import click
 
-from cfn_guard_test.cfn_guard_runner import CfnGuardReportRunner
-from cfn_guard_test.test_case import TestCase
-from cfn_guard_test.test_suite import TestSuite
-from cfn_guard_test.cfn_guard_reader import CfnGuardReportReader
+from cfn_guard_test.runner import CfnGuardReportRunner
+from cfn_guard_test.test_case import CfnGuardTestCase
+from cfn_guard_test.test_suite import CfnGuardTestSuite
+from cfn_guard_test.reader import CfnGuardReader
 
 
 def validate_cfn_guard_path(
