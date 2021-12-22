@@ -1,8 +1,9 @@
 import re
 from typing import Optional, List
 
-from cfn_guard_test.test_suite import CfnGuardTestSuite
-from cfn_guard_test.test_case import CfnGuardTestCase
+from cfn_guard_test.case import CfnGuardTestCase
+from cfn_guard_test.suites import CfnGuardTestSuites
+from cfn_guard_test.suite import CfnGuardTestSuite
 from cfn_guard_test.rule import CfnGuardRule
 
 
@@ -11,11 +12,16 @@ class CfnGuardReader:
     Understands how to read the output of cfn-guard.
     """
 
+    __suites: CfnGuardTestSuites
     __rule_name: str
+    __duration: float
 
-    def __init__(self, suite: CfnGuardTestSuite, rule_name: str, report: bytes):
-        self.__suite = suite
+    def __init__(
+        self, suites: CfnGuardTestSuites, rule_name: str, report: bytes, duration: float
+    ):
+        self.__suites = suites
         self.__rule_name = rule_name
+        self.__duration = duration
         sections = report.decode("utf-8").split("\n\n")
         list(map(lambda section: self.__parse_section(section), sections))
 
@@ -27,9 +33,12 @@ class CfnGuardReader:
         case_name = self.__get_case_name(test_case)
 
         if case_number and case_name:
-            case = CfnGuardTestCase(self.__rule_name, case_name, case_number)
-            list(map(case.rule_result, self.__get_rule_results(test_case)))
-            self.__suite.case_result(case)
+            case = CfnGuardTestCase(name=case_name, number=case_number)
+            list(map(case.add_rule, self.__get_rule_results(test_case)))
+
+            suite = CfnGuardTestSuite(name=self.__rule_name, duration=self.__duration)
+            suite.add_test_case(case)
+            self.__suites.add_test_suite(suite)
 
     @staticmethod
     def __get_case_number(test_case) -> Optional[int]:

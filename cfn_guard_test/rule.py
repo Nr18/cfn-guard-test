@@ -1,20 +1,23 @@
 class CfnGuardRule:
     """
     Understands the outcome of a specific rule.
+
+    A single cfn-guard rule contains the result of the evaluated rule. Each rule definition in the `expectations`
+    section of the `<name>_tests.yaml` file results in a cfn-guard rule.
     """
 
-    __rule: str
+    __name: str
     __expected: str
     __evaluated: str
 
-    def __init__(self, rule: str, expected: str, evaluated: str) -> None:
-        self.__rule = rule
+    def __init__(self, name: str, expected: str, evaluated: str) -> None:
+        self.__name = name
         self.__expected = expected
         self.__evaluated = evaluated
 
     @property
-    def rule(self) -> str:
-        return self.__rule
+    def name(self) -> str:
+        return self.__name
 
     @property
     def passed(self) -> bool:
