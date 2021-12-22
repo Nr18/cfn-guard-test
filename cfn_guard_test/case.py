@@ -5,20 +5,21 @@ from cfn_guard_test.rule import CfnGuardRule
 class CfnGuardTestCase:
     """
     Understands a cfn-guard test case
+
+    A single cfn-guard test case can contain 1 ore more rules that are evaluated. Each definition in the
+    `<name>_tests.yaml` file results in a cfn-guard test case.
     """
 
-    __ruleset: str
     __name: str
     __number: int
     __rules: List[CfnGuardRule]
 
-    def __init__(self, ruleset: str, name: str, number: int) -> None:
-        self.__ruleset = ruleset
+    def __init__(self, name: str, number: int) -> None:
         self.__name = name
         self.__number = number
         self.__rules = []
 
-    def rule_result(self, rule: CfnGuardRule) -> None:
+    def add_rule(self, rule: CfnGuardRule) -> None:
         self.__rules.append(rule)
 
     @property
@@ -26,8 +27,8 @@ class CfnGuardTestCase:
         return self.__name
 
     @property
-    def ruleset(self) -> str:
-        return self.__ruleset
+    def number(self) -> int:
+        return self.__number
 
     @property
     def passed(self) -> int:

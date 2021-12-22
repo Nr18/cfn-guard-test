@@ -71,6 +71,15 @@ from cfn_guard_test import main
         ),
         # Test 8
         (
+            "passing_rule.txt",
+            ["--verbose"],
+            True,
+            "rules/iam_tests.yaml",
+            "rules/iam.guard",
+            0,
+        ),
+        # Test 9
+        (
             "failed_rule.txt",
             [],
             True,
@@ -78,9 +87,9 @@ from cfn_guard_test import main
             "rules/iam.guard",
             1,
         ),
-        # Test 9
-        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 0),
         # Test 10
+        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 0),
+        # Test 11
         (
             "invalid_case_name.txt",
             [],
@@ -89,7 +98,7 @@ from cfn_guard_test import main
             "rules/iam.guard",
             0,
         ),
-        # Test 11
+        # Test 12
         (
             "invalid_case_number.txt",
             [],
@@ -98,7 +107,7 @@ from cfn_guard_test import main
             "rules/iam.guard",
             0,
         ),
-        # Test 12
+        # Test 13
         (
             "invalid_case_number_and_name.txt",
             [],

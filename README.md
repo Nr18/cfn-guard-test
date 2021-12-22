@@ -40,6 +40,13 @@ cfn-guard-test
 This will (by default) look for a test file in `tests/reports` and it there is a yaml file that matches the same name in
 the `reports` folder. It will then validate the rules defined in the `reports` folder against the test definition.
 
+You can get a more verbose output if you add one of the following commands:
+
+```bash
+cfn-guard-test -v
+cfn-guard-test --verbose
+```
+
 If you use a different folder structure you can define the rules and test paths as followed:
 
 ```bash
