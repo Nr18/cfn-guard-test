@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="1" time="0.5">
+	<testsuite disabled="0" errors="0" failures="0" name="rules/iam.guard" skipped="1" tests="1" time="0.5">
+		<testcase name="Rule" time="0.500000" classname="Rule Name">
+			<skipped type="skipped" message="Rule Rule was skipped on case #1 &quot;Rule Name&quot;"/>
+		</testcase>
+	</testsuite>
+</testsuites>

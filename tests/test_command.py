@@ -1,9 +1,10 @@
+import builtins
 from typing import List
 import subprocess
 import os
 import pytest
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, mock_open, call
 from click.testing import CliRunner
 from cfn_guard_test import main
 
@@ -71,6 +72,15 @@ from cfn_guard_test import main
         ),
         # Test 8
         (
+            "passing_rule.txt",
+            ["--verbose"],
+            True,
+            "rules/iam_tests.yaml",
+            "rules/iam.guard",
+            0,
+        ),
+        # Test 9
+        (
             "failed_rule.txt",
             [],
             True,
@@ -78,9 +88,9 @@ from cfn_guard_test import main
             "rules/iam.guard",
             1,
         ),
-        # Test 9
-        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 0),
         # Test 10
+        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 0),
+        # Test 11
         (
             "invalid_case_name.txt",
             [],
@@ -89,7 +99,7 @@ from cfn_guard_test import main
             "rules/iam.guard",
             0,
         ),
-        # Test 11
+        # Test 12
         (
             "invalid_case_number.txt",
             [],
@@ -98,7 +108,7 @@ from cfn_guard_test import main
             "rules/iam.guard",
             0,
         ),
-        # Test 12
+        # Test 13
         (
             "invalid_case_number_and_name.txt",
             [],
@@ -109,9 +119,9 @@ from cfn_guard_test import main
         ),
     ],
 )
-@patch("cfn_guard_test.cfn_guard_runner.subprocess.run")
-@patch("cfn_guard_test.cfn_guard_runner.glob.glob")
-@patch("cfn_guard_test.cfn_guard_runner.os.path.isfile")
+@patch("cfn_guard_test.runner.subprocess.run")
+@patch("cfn_guard_test.runner.glob.glob")
+@patch("cfn_guard_test.runner.os.path.isfile")
 def test_invoke(
     mock_isfile: MagicMock,
     mock_glob: MagicMock,
@@ -153,3 +163,67 @@ def test_invoke(
                 ],
                 stdout=subprocess.PIPE,
             )
+
+
+@pytest.mark.parametrize(
+    "payload, expected_exit_code",
+    [
+        ("2passing_rules", 0),
+        ("empty", 0),
+        ("failed_rule", 1),
+        ("invalid_case_name", 0),
+        ("invalid_case_number", 0),
+        ("invalid_case_number_and_name", 0),
+        ("passing_rule", 0),
+        ("skipped_rule", 0),
+    ],
+)
+@patch("cfn_guard_test.runner.subprocess.run")
+@patch("cfn_guard_test.runner.glob.glob")
+@patch("cfn_guard_test.runner.os.path.isfile")
+@patch("cfn_guard_test.runner.time")
+def test_junit(
+    mock_time: MagicMock,
+    mock_isfile: MagicMock,
+    mock_glob: MagicMock,
+    mock_run: MagicMock,
+    payload_path: str,
+    payload: str,
+    expected_exit_code: int,
+) -> None:
+    mock_glob.return_value = ["rules/iam_tests.yaml"]
+    mock_isfile.return_value = True
+    mock_time.time.side_effect = [0.0, 0.5]
+
+    with open(f"{payload_path}/{payload}.txt", "rb") as fh:
+        mock_stdout = MagicMock()
+        mock_stdout.stdout = fh.read()
+        mock_run.return_value = mock_stdout
+
+    mock_write = mock_open()
+    with patch.object(builtins, "open", mock_write, create=True):
+        runner = CliRunner()
+        result = runner.invoke(main, ["--junit-path", "my-report-path/cfn-guard.xml"])
+        assert result.exit_code == expected_exit_code
+
+    mock_write.assert_called_with("my-report-path/cfn-guard.xml", "w")
+
+    with open(f"{payload_path}/{payload}.xml", "rb") as fh:
+        mock_write.return_value.write.assert_called_once_with(fh.read().decode("utf-8"))
+
+
+def test_junit_non_writable_path() -> None:
+    runner = CliRunner()
+    result = runner.invoke(main, ["--junit-path", "my-report-path/cfn-guard.xml"])
+    assert result.exit_code == 1
+
+
+def test_junit_non_writable_file() -> None:
+    mock_write = mock_open()
+
+    mock_write.return_value.writable.return_value = False
+
+    with patch.object(builtins, "open", mock_write, create=True):
+        runner = CliRunner()
+        result = runner.invoke(main, ["--junit-path", "my-report-path/cfn-guard.xml"])
+        assert result.exit_code == 1

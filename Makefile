@@ -22,7 +22,7 @@ clean:
 	[[ -f .coverage ]] && rm .coverage || true
 
 run:
-	cfn-guard-test --cfn-guard-path "/usr/local/bin/cfn-guard"
+	cfn-guard-test --verbose --cfn-guard-path "/usr/local/bin/cfn-guard" --junit-path "reports/cfn-guard.xml"
 
 build:
 	python setup.py sdist

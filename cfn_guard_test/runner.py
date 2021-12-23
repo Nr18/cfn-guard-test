@@ -1,20 +1,33 @@
 import glob
 import os
 import subprocess
+import time
+from typing import Callable, Optional
 
-from cfn_guard_test.test_suite import TestSuite
-from cfn_guard_test.cfn_guard_reader import CfnGuardReportReader
+from cfn_guard_test.suites import CfnGuardTestSuites
+from cfn_guard_test.reader import CfnGuardReader
 
 
-class CfnGuardReportRunner:
+class CfnGuardRunner:
     """
     Understands how to execute cfn-guard.
     """
 
-    def __init__(self, cfn_guard_path: str, rules_path: str, test_path: str):
+    def __init__(
+        self,
+        cfn_guard_path: str,
+        rules_path: str,
+        test_path: str,
+        output_callback: Optional[Callable[[str], None]] = None,
+    ):
         self.cfn_guard_path = cfn_guard_path
-        self.rules_path = rules_path
-        self.test_path = test_path
+        self.rules_path = rules_path.rstrip("/")
+        self.test_path = test_path.rstrip("/")
+        self.output_callback = output_callback
+
+    def __print(self, message: str) -> None:
+        if self.output_callback:
+            self.output_callback(message)
 
     @property
     def __test_cases(self) -> dict:
@@ -30,10 +43,12 @@ class CfnGuardReportRunner:
 
         return rule_sets
 
-    def execute(self) -> TestSuite:
-        suite = TestSuite()
+    def execute(self) -> CfnGuardTestSuites:
+        suite = CfnGuardTestSuites()
 
         for rules_test_file, rules_file in self.__test_cases.items():
+            start_time = time.time()
+            self.__print(f"Running {rules_test_file}")
             response = subprocess.run(
                 [
                     self.cfn_guard_path,
@@ -45,6 +60,9 @@ class CfnGuardReportRunner:
                 ],
                 stdout=subprocess.PIPE,
             )
-            CfnGuardReportReader(suite, rules_file, response.stdout)
+            end_time = time.time()
+            CfnGuardReader(
+                suite, rules_file, response.stdout, duration=end_time - start_time
+            )
 
         return suite

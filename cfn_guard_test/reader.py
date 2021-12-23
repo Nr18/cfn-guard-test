@@ -1,21 +1,33 @@
 import re
 from typing import Optional, List
 
-from cfn_guard_test.test_suite import TestSuite
-from cfn_guard_test.test_case import TestCase
-from cfn_guard_test.rule_result import RuleResult
+from cfn_guard_test.case import CfnGuardTestCase
+from cfn_guard_test.suites import CfnGuardTestSuites
+from cfn_guard_test.suite import CfnGuardTestSuite
+from cfn_guard_test.rule import CfnGuardRule
 
 
-class CfnGuardReportReader:
+class CfnGuardReader:
     """
     Understands how to read the output of cfn-guard.
     """
 
+    __suites: CfnGuardTestSuites
     __rule_name: str
+    __duration: float
 
-    def __init__(self, suite: TestSuite, rule_name: str, report: bytes):
-        self.__suite = suite
+    def __init__(
+        self, suites: CfnGuardTestSuites, rule_name: str, report: bytes, duration: float
+    ):
+        self.__suites = suites
         self.__rule_name = rule_name
+        self.__duration = duration
+
+        self.__suite = CfnGuardTestSuite(
+            name=self.__rule_name, duration=self.__duration
+        )
+        self.__suites.add_test_suite(self.__suite)
+
         sections = report.decode("utf-8").split("\n\n")
         list(map(lambda section: self.__parse_section(section), sections))
 
@@ -24,12 +36,13 @@ class CfnGuardReportReader:
             return None
 
         case_number = self.__get_case_number(test_case)
-        case_name = self.__get_cane_name(test_case)
+        case_name = self.__get_case_name(test_case)
 
         if case_number and case_name:
-            case = TestCase(self.__rule_name, case_name, case_number)
-            list(map(case.rule_result, self.__get_rule_results(test_case)))
-            self.__suite.case_result(case)
+            case = CfnGuardTestCase(name=case_name, number=case_number)
+            list(map(case.add_rule, self.__get_rule_results(test_case)))
+
+            self.__suite.add_test_case(case)
 
     @staticmethod
     def __get_case_number(test_case) -> Optional[int]:
@@ -37,12 +50,12 @@ class CfnGuardReportReader:
         return int(match.group(1)) if match else None
 
     @staticmethod
-    def __get_cane_name(test_case: str) -> Optional[str]:
+    def __get_case_name(test_case: str) -> Optional[str]:
         match = re.search(r"Name: \"(.*)\"", test_case, re.MULTILINE)
         return match.group(1) if match else None
 
     @staticmethod
-    def __get_rule_results(test_case) -> List[RuleResult]:
+    def __get_rule_results(test_case) -> List[CfnGuardRule]:
         results = []
         matches = re.finditer(
             r"    (.*): Expected = ([A-Z]+), Evaluated = ([A-Z]+)",
@@ -52,6 +65,6 @@ class CfnGuardReportReader:
 
         for matchNum, match in enumerate(matches, start=1):
             rule = match.groups(matchNum)
-            results.append(RuleResult(rule[0], rule[1], rule[2]))
+            results.append(CfnGuardRule(rule[0], rule[1], rule[2]))
 
         return results

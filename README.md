@@ -18,6 +18,17 @@ You can install the `cfn-guard-test` tool by running the following command:
 pip install cfn_guard_test
 ```
 
+### Installation in venv
+
+Typically, you would want to run your dependencies isolated. You can install [cfn-guard-test][cfn-guard-test] in a `venv`
+using the following commands:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install cfn_guard_test
+```
+
 ## Usage
 
 To use `cfn-guard-test` you just execute the following command:
@@ -28,6 +39,13 @@ cfn-guard-test
 
 This will (by default) look for a test file in `tests/reports` and it there is a yaml file that matches the same name in
 the `reports` folder. It will then validate the rules defined in the `reports` folder against the test definition.
+
+You can get a more verbose output if you add one of the following commands:
+
+```bash
+cfn-guard-test -v
+cfn-guard-test --verbose
+```
 
 If you use a different folder structure you can define the rules and test paths as followed:
 
@@ -42,7 +60,18 @@ the following command:
 
 ```bash
 cfn-guard-test \
-  --cfn-guard-path "/my/customm/path/cfn-guard"
+  --cfn-guard-path "/my/custom/path/cfn-guard"
 ```
 
-[cfn-guard]:  https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
+### Generate a JUnit XML Report
+
+You can generate a JUnit XML Report using the `--junit-path` option. Once given it will generate a JUnit XML compatible
+report at the given location. Example:
+
+```bash
+cfn-guard-test \
+  --junit-path "reports/cfn-guard.xml"
+```
+
+[cfn-guard]: https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
+[cfn-guard-test]: https://github.com/Nr18/cfn-guard-test "CloudFormation Guard Test"
