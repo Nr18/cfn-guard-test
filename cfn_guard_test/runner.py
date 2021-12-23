@@ -21,8 +21,8 @@ class CfnGuardRunner:
         output_callback: Optional[Callable[[str], None]] = None,
     ):
         self.cfn_guard_path = cfn_guard_path
-        self.rules_path = rules_path
-        self.test_path = test_path
+        self.rules_path = rules_path.rstrip("/")
+        self.test_path = test_path.rstrip("/")
         self.output_callback = output_callback
 
     def __print(self, message: str) -> None:
