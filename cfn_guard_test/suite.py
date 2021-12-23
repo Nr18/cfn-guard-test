@@ -26,6 +26,10 @@ class CfnGuardTestSuite:
         return self.__name
 
     @property
+    def duration(self) -> float:
+        return self.__duration
+
+    @property
     def passed(self) -> int:
         rules = self.passed_test_cases
         return len(rules) if rules else 0
@@ -36,8 +40,22 @@ class CfnGuardTestSuite:
         return len(rules) if rules else 0
 
     @property
+    def all_test_cases(self) -> List[CfnGuardTestCase]:
+        return self.__cases
+
+    @property
     def failed_test_cases(self) -> List[CfnGuardTestCase]:
         return list(filter(lambda case: case.failed, self.__cases))
+
+    @property
+    def failed_test_cases_messages(self) -> List[str]:
+        messages = []
+
+        def extend(case: CfnGuardTestCase) -> None:
+            messages.extend(case.failed_rules_messages(suite_name=self.ruleset))
+
+        list(map(extend, self.failed_test_cases))
+        return messages
 
     @property
     def passed_test_cases(self) -> List[CfnGuardTestCase]:

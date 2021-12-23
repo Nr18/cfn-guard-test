@@ -22,6 +22,12 @@ class CfnGuardReader:
         self.__suites = suites
         self.__rule_name = rule_name
         self.__duration = duration
+
+        self.__suite = CfnGuardTestSuite(
+            name=self.__rule_name, duration=self.__duration
+        )
+        self.__suites.add_test_suite(self.__suite)
+
         sections = report.decode("utf-8").split("\n\n")
         list(map(lambda section: self.__parse_section(section), sections))
 
@@ -36,9 +42,7 @@ class CfnGuardReader:
             case = CfnGuardTestCase(name=case_name, number=case_number)
             list(map(case.add_rule, self.__get_rule_results(test_case)))
 
-            suite = CfnGuardTestSuite(name=self.__rule_name, duration=self.__duration)
-            suite.add_test_case(case)
-            self.__suites.add_test_suite(suite)
+            self.__suite.add_test_case(case)
 
     @staticmethod
     def __get_case_number(test_case) -> Optional[int]:

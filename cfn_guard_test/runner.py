@@ -60,9 +60,9 @@ class CfnGuardRunner:
                 ],
                 stdout=subprocess.PIPE,
             )
-
+            end_time = time.time()
             CfnGuardReader(
-                suite, rules_file, response.stdout, duration=time.time() - start_time
+                suite, rules_file, response.stdout, duration=end_time - start_time
             )
 
         return suite
