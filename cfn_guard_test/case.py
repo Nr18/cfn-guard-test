@@ -52,7 +52,7 @@ class CfnGuardTestCase:
         messages: List[str] = []
 
         def extend(rule: CfnGuardRule) -> None:
-            messages.extend(
+            messages.append(
                 rule.failed_message(
                     suite_name=suite_name, case_number=self.number, case_name=self.name
                 )

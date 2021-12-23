@@ -77,17 +77,16 @@ def main(
         output_callback=resolve_output_callback(verbose),
     ).execute()
 
-    list(map(click.echo, suites.failed_suites_messages))
+    if junit_path:
+        CfnGuardReport(suites).write(junit_path)
 
     click.echo()
     click.echo(f"Passed {suites.passed}")
     click.echo(f"Failed {suites.failed}")
     click.echo()
 
-    if junit_path:
-        CfnGuardReport(suites).write(junit_path)
-
     if suites.failed:
+        list(map(click.echo, suites.failed_suites_messages))
         exit(1)
 
 
