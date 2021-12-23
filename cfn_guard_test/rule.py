@@ -26,3 +26,12 @@ class CfnGuardRule:
     @property
     def failed(self) -> bool:
         return not self.passed
+
+    @property
+    def skipped(self) -> bool:
+        return self.__expected == "SKIP" and self.passed
+
+    def failed_message(self, suite_name: str, case_number: int, case_name: str) -> str:
+        return (
+            f'Rule {self.name} failed on #{case_number} "{case_name}" in {suite_name}'
+        )

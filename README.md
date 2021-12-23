@@ -63,5 +63,15 @@ cfn-guard-test \
   --cfn-guard-path "/my/custom/path/cfn-guard"
 ```
 
+### Generate a JUnit XML Report
+
+You can generate a JUnit XML Report using the `--junit-path` option. Once given it will generate a JUnit XML compatible
+report at the given location. Example:
+
+```bash
+cfn-guard-test \
+  --junit-path "reports/cfn-guard.xml"
+```
+
 [cfn-guard]: https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
 [cfn-guard-test]: https://github.com/Nr18/cfn-guard-test "CloudFormation Guard Test"

@@ -41,8 +41,25 @@ class CfnGuardTestCase:
         return len(rules) if rules else 0
 
     @property
+    def all_rules(self) -> List[CfnGuardRule]:
+        return self.__rules
+
+    @property
     def failed_rules(self) -> List[CfnGuardRule]:
         return list(filter(lambda case: case.failed, self.__rules))
+
+    def failed_rules_messages(self, suite_name: str) -> List[str]:
+        messages: List[str] = []
+
+        def extend(rule: CfnGuardRule) -> None:
+            messages.extend(
+                rule.failed_message(
+                    suite_name=suite_name, case_number=self.number, case_name=self.name
+                )
+            )
+
+        list(map(extend, self.failed_rules))
+        return messages
 
     @property
     def passed_rules(self) -> List[CfnGuardRule]:
