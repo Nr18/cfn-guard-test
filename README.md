@@ -30,13 +30,17 @@ pip install cfn_guard_test
 ```
 
 ## Alternative installation: Docker
+
 Build the docker image
+
 ```bash
 docker build -t cfn-guard-test-docker .
 ```
 
 #### Docker usage
+
 Run the `cfn-guard-test` command as follows
+
 ```bash
 docker run --rm -it -v `pwd`:/tests cfn-guard-test-docker cfn-guard-test
 ```
