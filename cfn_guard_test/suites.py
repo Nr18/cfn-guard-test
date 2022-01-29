@@ -18,6 +18,10 @@ class CfnGuardTestSuites:
         self.__suites.append(case)
 
     @property
+    def errors(self) -> int:
+        return sum(map(lambda suite: suite.errors, self.error_suites), 0)
+
+    @property
     def passed(self) -> int:
         return sum(map(lambda suite: suite.passed, self.passed_suites), 0)
 
@@ -31,10 +35,22 @@ class CfnGuardTestSuites:
 
     @property
     def failed_suites(self) -> List[CfnGuardTestSuite]:
-        return list(filter(lambda case: case.failed, self.__suites))
+        return list(filter(lambda suite: suite.failed, self.__suites))
 
     @property
-    def failed_suites_messages(self) -> List[str]:
+    def error_suites(self) -> List[CfnGuardTestSuite]:
+        return list(filter(lambda suite: suite.errors, self.__suites))
+
+    @property
+    def error_messages(self) -> List[str]:
+        messages = []
+        list(
+            map(lambda suite: messages.extend(suite.error_messages), self.error_suites)
+        )
+        return messages
+
+    @property
+    def failure_messages(self) -> List[str]:
         messages = []
 
         def extend(suite: CfnGuardTestSuite) -> None:
@@ -45,4 +61,4 @@ class CfnGuardTestSuites:
 
     @property
     def passed_suites(self) -> List[CfnGuardTestSuite]:
-        return list(filter(lambda case: case.passed, self.__suites))
+        return list(filter(lambda suite: suite.passed, self.__suites))

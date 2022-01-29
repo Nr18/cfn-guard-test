@@ -1,7 +1,7 @@
 import re
 from typing import Optional, List
 
-from cfn_guard_test.case import CfnGuardTestCase
+from cfn_guard_test.case import CfnGuardTestCase, ErrorTestCase
 from cfn_guard_test.suites import CfnGuardTestSuites
 from cfn_guard_test.suite import CfnGuardTestSuite
 from cfn_guard_test.rule import CfnGuardRule
@@ -19,6 +19,7 @@ class CfnGuardReader:
     def __init__(
         self, suites: CfnGuardTestSuites, rule_name: str, report: bytes, duration: float
     ):
+        self.__valid_report = False
         self.__suites = suites
         self.__rule_name = rule_name
         self.__duration = duration
@@ -31,6 +32,12 @@ class CfnGuardReader:
         sections = report.decode("utf-8").split("\n\n")
         list(map(lambda section: self.__parse_section(section), sections))
 
+        if not self.__valid_report:
+            case = ErrorTestCase(
+                message=f"Unable to read the output when testing '{rule_name}'!"
+            )
+            self.__suite.add_test_case(case)
+
     def __parse_section(self, test_case: str) -> None:
         if not test_case.strip():
             return None
@@ -39,6 +46,7 @@ class CfnGuardReader:
         case_name = self.__get_case_name(test_case)
 
         if case_number and case_name:
+            self.__valid_report = True
             case = CfnGuardTestCase(name=case_name, number=case_number)
             list(map(case.add_rule, self.__get_rule_results(test_case)))
 
