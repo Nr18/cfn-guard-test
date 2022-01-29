@@ -31,9 +31,17 @@ class CfnGuardTestCase:
         return self.__number
 
     @property
+    def message(self) -> str:
+        return ""
+
+    @property
     def passed(self) -> int:
         rules = self.passed_rules
         return len(rules) if rules else 0
+
+    @property
+    def errors(self) -> int:
+        return 0
 
     @property
     def failed(self) -> int:
@@ -64,3 +72,17 @@ class CfnGuardTestCase:
     @property
     def passed_rules(self) -> List[CfnGuardRule]:
         return list(filter(lambda case: case.passed, self.__rules))
+
+
+class ErrorTestCase(CfnGuardTestCase):
+    def __init__(self, message: str) -> None:
+        super().__init__(name="Loading Error", number=1)
+        self.__message = message
+
+    @property
+    def errors(self) -> int:
+        return 1
+
+    @property
+    def message(self) -> str:
+        return self.__message
