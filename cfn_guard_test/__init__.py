@@ -81,12 +81,26 @@ def main(
         CfnGuardReport(suites).write(junit_path)
 
     click.echo()
-    click.echo(f"Passed {suites.passed}")
+    click.echo(f"Errors {suites.errors}")
     click.echo(f"Failed {suites.failed}")
+    click.echo(f"Passed {suites.passed}")
     click.echo()
+    display_failures_errors(suites)
+
+
+def display_failures_errors(suites: CfnGuardTestSuites) -> None:
+
+    if suites.errors:
+        click.echo(click.style("Errors:", bold=True))
+        list(map(click.echo, suites.error_messages))
+        click.echo()
 
     if suites.failed:
-        list(map(click.echo, suites.failed_suites_messages))
+        click.echo(click.style("Failures:", bold=True))
+        list(map(click.echo, suites.failure_messages))
+        click.echo()
+
+    if suites.errors or suites.failed:
         exit(1)
 
 

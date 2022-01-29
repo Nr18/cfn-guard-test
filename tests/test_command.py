@@ -89,7 +89,7 @@ from cfn_guard_test import main
             1,
         ),
         # Test 10
-        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 0),
+        ("empty.txt", [], True, "rules/iam_tests.yaml", "rules/iam.guard", 1),
         # Test 11
         (
             "invalid_case_name.txt",
@@ -97,7 +97,7 @@ from cfn_guard_test import main
             True,
             "rules/iam_tests.yaml",
             "rules/iam.guard",
-            0,
+            1,
         ),
         # Test 12
         (
@@ -106,7 +106,7 @@ from cfn_guard_test import main
             True,
             "rules/iam_tests.yaml",
             "rules/iam.guard",
-            0,
+            1,
         ),
         # Test 13
         (
@@ -115,7 +115,7 @@ from cfn_guard_test import main
             True,
             "rules/iam_tests.yaml",
             "rules/iam.guard",
-            0,
+            1,
         ),
     ],
 )
@@ -165,15 +165,36 @@ def test_invoke(
             )
 
 
+@patch("cfn_guard_test.runner.subprocess.run")
+@patch("cfn_guard_test.runner.glob.glob")
+@patch("cfn_guard_test.runner.os.path.isfile")
+def test_invoke_cfn_guard_failure(
+    mock_isfile: MagicMock, mock_glob: MagicMock, mock_run: MagicMock
+) -> None:
+    mock_glob.return_value = ["rules/iam_tests.yaml"]
+    mock_isfile.return_value = True
+
+    mock_stdout = MagicMock()
+    mock_stdout.stdout = bytes(
+        "Error processing Parser Error when parsing Unable to process data in file...",
+        "utf-8",
+    )
+    mock_run.return_value = mock_stdout
+
+    runner = CliRunner()
+    result = runner.invoke(main, [])
+    assert result.exit_code == 1
+
+
 @pytest.mark.parametrize(
     "payload, expected_exit_code",
     [
         ("2passing_rules", 0),
-        ("empty", 0),
+        ("empty", 1),
         ("failed_rule", 1),
-        ("invalid_case_name", 0),
-        ("invalid_case_number", 0),
-        ("invalid_case_number_and_name", 0),
+        ("invalid_case_name", 1),
+        ("invalid_case_number", 1),
+        ("invalid_case_number_and_name", 1),
         ("passing_rule", 0),
         ("skipped_rule", 0),
     ],
