@@ -184,6 +184,11 @@ def test_invoke_cfn_guard_failure(
     runner = CliRunner()
     result = runner.invoke(main, [])
     assert result.exit_code == 1
+    assert "Unable to read the output when testing 'rules/iam.guard'!" in result.stdout
+    assert (
+        "Error processing Parser Error when parsing Unable to process data in file..."
+        in result.stdout
+    )
 
 
 @pytest.mark.parametrize(

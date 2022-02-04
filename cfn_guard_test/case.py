@@ -75,9 +75,9 @@ class CfnGuardTestCase:
 
 
 class ErrorTestCase(CfnGuardTestCase):
-    def __init__(self, message: str) -> None:
+    def __init__(self, message: str, details: str) -> None:
         super().__init__(name="Loading Error", number=1)
-        self.__message = message
+        self.__message = message + "\n\n" + details
 
     @property
     def errors(self) -> int:
