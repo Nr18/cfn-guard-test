@@ -34,7 +34,8 @@ class CfnGuardReader:
 
         if not self.__valid_report:
             case = ErrorTestCase(
-                message=f"Unable to read the output when testing '{rule_name}'!"
+                message=f"Unable to read the output when testing '{rule_name}'!",
+                details=report.decode("utf-8"),
             )
             self.__suite.add_test_case(case)
 
