@@ -11,7 +11,7 @@ junit-xml = "^1.9"
 click = "^8.0.3"
 
 [tool.poetry.dev-dependencies]
-black = "^21.9b0"
+black = "^22.1"
 mypy = "^0.910"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
