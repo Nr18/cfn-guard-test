@@ -618,14 +618,14 @@ python-versions = "*"
 
 [[package]]
 name = "xenon"
-version = "0.8.0"
+version = "0.9.0"
 description = "Monitor code metrics for Python on your CI server"
 category = "dev"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-PyYAML = ">=4.2b1,<6.0"
+PyYAML = ">=4.2b1,<7.0"
 radon = ">=4,<6"
 requests = ">=2.0,<3.0"
 
@@ -644,7 +644,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "d6214947f6562c7b38ecde6645e41482ef857d79bf21d78fe13b823547bb045b"
+content-hash = "941ca5ef28832677d36dae4752429891076621572b165333d95e2cc698dd70dc"
 
 [metadata.files]
 atomicwrites = [
@@ -1025,8 +1025,8 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 xenon = [
-    {file = "xenon-0.8.0-py2.py3-none-any.whl", hash = "sha256:4c3d7157d9ae058364e130c831702e4a65a1f729d4b4def912418ed09772c851"},
-    {file = "xenon-0.8.0.tar.gz", hash = "sha256:cd5cad0930673d0e52609712c63fe4721a8f4c4342dc338bd7ea5fa0666b8515"},
+    {file = "xenon-0.9.0-py2.py3-none-any.whl", hash = "sha256:994c80c7f1c6d40596b600b93734d85a5739208f31895ef99f1e4d362caf9e35"},
+    {file = "xenon-0.9.0.tar.gz", hash = "sha256:d2b9cb6c6260f771a432c1e588e51fddb17858f88f73ef641e7532f7a5f58fb8"},
 ]
 zipp = [
     {file = "zipp-3.7.0-py3-none-any.whl", hash = "sha256:b47250dd24f92b7dd6a0a8fc5244da14608f3ca90a5efcd37a3b1642fac9a375"},
