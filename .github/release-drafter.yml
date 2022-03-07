@@ -53,7 +53,7 @@ autolabeler:
       - '/test:/i'
       - '/perf:/i'
   - label: 'dependencies'
-      title:
-        - '/chore\(deps-dev\)/i'
+    title:
+      - '/chore\(deps-dev\)/i'
 exclude-labels:
   - 'skip-changelog'
