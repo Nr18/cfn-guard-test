@@ -35,6 +35,10 @@ class CfnGuardTestCase:
         return ""
 
     @property
+    def details(self) -> str:
+        return ""
+
+    @property
     def passed(self) -> int:
         rules = self.passed_rules
         return len(rules) if rules else 0
@@ -77,7 +81,8 @@ class CfnGuardTestCase:
 class ErrorTestCase(CfnGuardTestCase):
     def __init__(self, message: str, details: str) -> None:
         super().__init__(name="Loading Error", number=1)
-        self.__message = message + "\n\n" + details
+        self.__message = message
+        self.__details = details
 
     @property
     def errors(self) -> int:
@@ -86,3 +91,7 @@ class ErrorTestCase(CfnGuardTestCase):
     @property
     def message(self) -> str:
         return self.__message
+
+    @property
+    def details(self) -> str:
+        return self.__details

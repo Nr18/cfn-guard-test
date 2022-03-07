@@ -59,7 +59,7 @@ class CfnGuardTestSuite:
     @property
     def error_messages(self) -> List[str]:
         messages = []
-        list(map(lambda case: messages.append(case.message), self.error_test_cases))
+        list(map(lambda case: messages.append(case.message + "\n\n" + case.details), self.error_test_cases))
         return messages
 
     @property

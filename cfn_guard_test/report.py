@@ -1,7 +1,7 @@
 from typing import List
 
 from cfn_guard_test.rule import CfnGuardRule
-from cfn_guard_test.case import CfnGuardTestCase
+from cfn_guard_test.case import CfnGuardTestCase, ErrorTestCase
 from cfn_guard_test.suites import CfnGuardTestSuites
 from junit_xml import TestCase, TestSuite, to_xml_report_string
 
@@ -43,10 +43,21 @@ class CfnGuardReport:
         cases = []
 
         for case in suite.all_test_cases:
+            if case.errors:
+                cases.append(self.__create_error(case))
+
             for rule in case.all_rules:
                 cases.append(self.__create_test_case(case=case, rule=rule))
 
         return cases
+
+    def __create_error(self, error: ErrorTestCase) -> TestCase:
+        test_case = TestCase(
+            name=error.name, elapsed_sec=self.elapsed_sec
+        )
+        test_case.add_error_info(message=error.message, output=error.details)
+
+        return test_case
 
     def __create_test_case(
         self, case: CfnGuardTestCase, rule: CfnGuardRule
@@ -57,12 +68,12 @@ class CfnGuardReport:
 
         if rule.skipped:
             test_case.add_skipped_info(
-                f'Rule {rule.name} was skipped on case #{case.number} "{case.name}"'
+                f'Rule {rule.name} was skipped on case #{case.number} "{case.name}"', output=case.details
             )
 
         if rule.failed:
             test_case.add_failure_info(
-                f'Rule {rule.name} failed on case #{case.number} "{case.name}"'
+                f'Rule {rule.name} failed on case #{case.number} "{case.name}"', output=case.details
             )
 
         return test_case
