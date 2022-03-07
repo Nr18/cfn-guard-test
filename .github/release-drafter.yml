@@ -16,6 +16,8 @@ categories:
     label: 'bug'
   - title: '🧰 Maintenance'
     label: 'maintenance'
+  - title: '🛠 Dependencies'
+    label: 'dependencies'
   - title: '📚 Documentation'
     label: 'documentation'
 
@@ -31,6 +33,7 @@ version-resolver:
       - 'bug'
       - 'maintenance'
       - 'documentation'
+      - 'dependencies'
 
 autolabeler:
   - label: 'feature'
@@ -49,6 +52,8 @@ autolabeler:
       - '/style:/i'
       - '/test:/i'
       - '/perf:/i'
-
+  - label: 'dependencies'
+    title:
+      - '/chore\(deps-dev\)/i'
 exclude-labels:
   - 'skip-changelog'

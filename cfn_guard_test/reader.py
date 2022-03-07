@@ -34,7 +34,8 @@ class CfnGuardReader:
 
         if not self.__valid_report:
             case = ErrorTestCase(
-                message=f"Unable to read the output when testing '{rule_name}'!"
+                message=f"Unable to read the output when testing '{rule_name}'!",
+                details=report.decode("utf-8"),
             )
             self.__suite.add_test_case(case)
 
@@ -73,6 +74,6 @@ class CfnGuardReader:
 
         for matchNum, match in enumerate(matches, start=1):
             rule = match.groups(matchNum)
-            results.append(CfnGuardRule(rule[0], rule[1], rule[2]))
+            results.append(CfnGuardRule(str(rule[0]), str(rule[1]), str(rule[2])))
 
         return results
