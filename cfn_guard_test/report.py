@@ -52,9 +52,7 @@ class CfnGuardReport:
         return cases
 
     def __create_error(self, error: ErrorTestCase) -> TestCase:
-        test_case = TestCase(
-            name=error.name, elapsed_sec=self.elapsed_sec
-        )
+        test_case = TestCase(name=error.name, elapsed_sec=self.elapsed_sec)
         test_case.add_error_info(message=error.message, output=error.details)
 
         return test_case
@@ -68,12 +66,14 @@ class CfnGuardReport:
 
         if rule.skipped:
             test_case.add_skipped_info(
-                f'Rule {rule.name} was skipped on case #{case.number} "{case.name}"', output=case.details
+                f'Rule {rule.name} was skipped on case #{case.number} "{case.name}"',
+                output=case.details,
             )
 
         if rule.failed:
             test_case.add_failure_info(
-                f'Rule {rule.name} failed on case #{case.number} "{case.name}"', output=case.details
+                f'Rule {rule.name} failed on case #{case.number} "{case.name}"',
+                output=case.details,
             )
 
         return test_case
