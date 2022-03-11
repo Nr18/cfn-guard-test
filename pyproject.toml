@@ -12,7 +12,7 @@ click = "^8.0.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1"
-mypy = "^0.931"
+mypy = "^0.940"
 pytest = "^7.0.1"
 pytest-cov = "^3.0.0"
 pytest-mypy = "^0.9.1"
