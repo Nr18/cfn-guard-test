@@ -5,7 +5,7 @@
 			<error type="error" message="Unable to read the output when testing 'rules/iam.guard'!">Test Case #1
 Name:
   PASS Rules:
-    Rule: Expected = PASS, Evaluated = PASS</error>
+    Rule: Expected = PASS, Evaluated = [PASS]</error>
 		</testcase>
 	</testsuite>
 </testsuites>

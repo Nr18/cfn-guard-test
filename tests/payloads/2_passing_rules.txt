@@ -1,5 +1,5 @@
 Test Case #1
 Name: "Rule Name"
   PASS Rules:
-    Rule: Expected = PASS, Evaluated = PASS
+    Rule: Expected = PASS
     Rule: Expected = PASS, Evaluated = PASS
