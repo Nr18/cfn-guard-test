@@ -194,9 +194,12 @@ def test_invoke_cfn_guard_failure(
 @pytest.mark.parametrize(
     "payload, expected_exit_code",
     [
-        ("2passing_rules", 0),
+        ("passing_rule", 0),
+        ("passing_rule_older_version", 0),
+        ("2_passing_rules", 0),
         ("empty", 1),
         ("failed_rule", 1),
+        ("failed_rule_older_version", 1),
         ("invalid_case_name", 1),
         ("invalid_case_number", 1),
         ("invalid_case_number_and_name", 1),

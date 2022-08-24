@@ -67,13 +67,16 @@ class CfnGuardReader:
     def __get_rule_results(test_case) -> List[CfnGuardRule]:
         results = []
         matches = re.finditer(
-            r"    (.*): Expected = ([A-Z]+), Evaluated = ([A-Z]+)",
+            r"    (.*): Expected = ([A-Z]+)(, Evaluated = (\[|)([A-Z]+)(\]|)|)",
             test_case,
             re.MULTILINE,
         )
 
         for matchNum, match in enumerate(matches, start=1):
             rule = match.groups(matchNum)
-            results.append(CfnGuardRule(str(rule[0]), str(rule[1]), str(rule[2])))
+
+            evaluated = rule[4] if rule[2] else rule[1]
+
+            results.append(CfnGuardRule(str(rule[0]), str(rule[1]), str(evaluated)))
 
         return results
