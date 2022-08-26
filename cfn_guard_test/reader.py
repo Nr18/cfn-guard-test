@@ -76,7 +76,9 @@ class CfnGuardReader:
             rule = match.groups(matchNum)
 
             evaluated = rule[4] if rule[2] else rule[1]
-
             results.append(CfnGuardRule(str(rule[0]), str(rule[1]), str(evaluated)))
+
+        if not results:
+            results.append(CfnGuardRule("Unable to read the output", "PASS", "FAIL"))
 
         return results
