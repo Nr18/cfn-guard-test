@@ -33,5 +33,6 @@ class CfnGuardRule:
 
     def failed_message(self, suite_name: str, case_number: int, case_name: str) -> str:
         return (
-            f'Rule {self.name} failed on #{case_number} "{case_name}" in {suite_name}'
+            f'Rule {self.name} failed on #{case_number} "{case_name}" in {suite_name} '
+            + f"(Expected {self.__expected} but {self.__evaluated} was evaluated)"
         )

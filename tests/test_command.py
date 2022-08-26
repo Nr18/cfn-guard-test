@@ -196,6 +196,7 @@ def test_invoke_cfn_guard_failure(
     [
         ("passing_rule", 0),
         ("passing_rule_older_version", 0),
+        ("skipped_rule", 0),
         ("2_passing_rules", 0),
         ("empty", 1),
         ("failed_rule", 1),
@@ -203,8 +204,7 @@ def test_invoke_cfn_guard_failure(
         ("invalid_case_name", 1),
         ("invalid_case_number", 1),
         ("invalid_case_number_and_name", 1),
-        ("passing_rule", 0),
-        ("skipped_rule", 0),
+        ("non_compatible_rule", 1),
     ],
 )
 @patch("cfn_guard_test.runner.subprocess.run")
