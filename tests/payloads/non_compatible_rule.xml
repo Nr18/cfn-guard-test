@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="1" tests="1" time="0.5">
+	<testsuite disabled="0" errors="0" failures="1" name="rules/iam.guard" skipped="0" tests="1" time="0.5">
+		<testcase name="Unable to read the output" time="0.500000" classname="Rule Name">
+			<failure type="failure" message="Rule Unable to read the output failed on case #1 &quot;Rule Name&quot;"/>
+		</testcase>
+	</testsuite>
+</testsuites>
