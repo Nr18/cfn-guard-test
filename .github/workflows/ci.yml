@@ -22,8 +22,18 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.2.0
+      - uses: Gr1N/setup-poetry@v8
+        with:
+          poetry-version: "1.4.0"
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+      - run: poetry --version
+      - name: Prepare variables
+        id: vars
+        run: |
+          echo "version=$(awk '/version/{print $NF}'  pyproject.toml | sed 's/\"//g')" >> $GITHUB_OUTPUT
       - name: Install dependencies
         run: make install
       - name: Run check
