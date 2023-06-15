@@ -27,13 +27,13 @@ clean:
 run:
 	cfn-guard-test --verbose --cfn-guard-path "/usr/local/bin/cfn-guard" --junit-path "reports/cfn-guard.xml"
 
-.PHONY: build
-build:
-	python setup.py sdist
+.PHONY: patch
+patch:
+	semantic-release --patch version
 
-.PHONY: release
-release: build
-	twine upload dist/*
+.PHONY: minor
+minor:
+	semantic-release --minor version
 
 .PHONY: complexity
 complexity:
