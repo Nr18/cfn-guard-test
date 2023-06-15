@@ -2,16 +2,18 @@ SHELL = /bin/bash -c
 VIRTUAL_ENV = $(shell poetry env info --path)
 export BASH_ENV=$(VIRTUAL_ENV)/bin/activate
 
-.PHONY: lint test install clean run build release complexity-baseline
-
+.PHONY: lint
 lint: _black _mypy
 
-test: lint complexity-baseline
+.PHONY: complexity
+test: lint complexity
 	pytest --cov --mypy --cov-report term-missing --junitxml=reports/pytest.xml --cov-report xml:reports/coverage.xml
 
+.PHONY: install
 install: $(VIRTUAL_ENV)
 	poetry install
 
+.PHONY: clean
 clean:
 	[[ -d "$(VIRTUAL_ENV)" ]] && rm -rf "$(VIRTUAL_ENV)" || true
 	[[ -d .mypy_cache ]] && rm -rf .mypy_cache || true
@@ -21,16 +23,20 @@ clean:
 	[[ -d cfn_guard_test/cfn_guard_test.egg-info ]] && rm -rf cfn_guard_test/cfn_guard_test.egg-info || true
 	[[ -f .coverage ]] && rm .coverage || true
 
+.PHONY: run
 run:
 	cfn-guard-test --verbose --cfn-guard-path "/usr/local/bin/cfn-guard" --junit-path "reports/cfn-guard.xml"
 
+.PHONY: build
 build:
 	python setup.py sdist
 
+.PHONY: release
 release: build
 	twine upload dist/*
 
-complexity-baseline:
+.PHONY: complexity
+complexity:
 	$(info Maintenability index)
 	radon mi --min A --max A --show --sort cfn_guard_test
 	$(info Cyclomatic complexity index)

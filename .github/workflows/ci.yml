@@ -1,18 +1,16 @@
 name: Continuous Integration
-
 on:
   push:
     branches:
       - main
   pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
-
-  ci:
+  Quality:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         python-version: [3.8, 3.9]
         os: [ubuntu-latest]
@@ -22,36 +20,35 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: Gr1N/setup-poetry@v8
+      - name: Install Python Poetry
+        uses: abatilo/actions-poetry@v2.1.0
         with:
-          poetry-version: "1.4.0"
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-      - run: poetry --version
-      - name: Prepare variables
-        id: vars
-        run: |
-          echo "version=$(awk '/version/{print $NF}'  pyproject.toml | sed 's/\"//g')" >> $GITHUB_OUTPUT
+          poetry-version: 1.4.0
+      - name: Configure poetry
+        shell: bash
+        run: python -m poetry config virtualenvs.in-project true
+      - name: View poetry version
+        run: poetry --version
       - name: Install dependencies
-        run: make install
+        run: |
+          python -m poetry install
       - name: Run check
         run: make test
-      - name: Run complexity-baseline
-        run: make complexity-baseline
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+      - name: Run complexity baseline
+        run: make complexity
+
+  Release:
+    needs: Quality
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./reports/coverage.xml
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.1.0
+          fetch-depth: 0
+      - name: Python Semantic Release
+        uses: relekang/python-semantic-release@master
         with:
-          filename: reports/coverage.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          output: both
-          thresholds: 95 100
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository_username: __token__
+          repository_password: ${{ secrets.PYPI_API_TOKEN }}
