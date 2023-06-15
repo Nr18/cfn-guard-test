@@ -11,6 +11,9 @@ from cfn_guard_test.suites import CfnGuardTestSuites
 from cfn_guard_test.reader import CfnGuardReader
 
 
+__version__ = "0.6.0"
+
+
 def validate_cfn_guard_path(
     ctx: click.Context, _: click.Option, value: Optional[str]
 ) -> str:
