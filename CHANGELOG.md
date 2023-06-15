@@ -1,0 +1,15 @@
+# Changelog
+
+<!--next-version-placeholder-->
+
+## v0.7.0 (2023-06-15)
+
+### Feature
+
+* Release ([#102](https://github.com/Nr18/cfn-guard-test/issues/102)) ([`d447717`](https://github.com/Nr18/cfn-guard-test/commit/d447717f6012103d3d779a00135ecc9380da7f23))
+
+### Fix
+
+* Reset version ([`ac23972`](https://github.com/Nr18/cfn-guard-test/commit/ac2397204190974848001395ca67e91f401d85a2))
+* Use a explicit poetry version ([`24ce8be`](https://github.com/Nr18/cfn-guard-test/commit/24ce8bef560d3ad66c49fdd8d05e802063adfc70))
+* Use a explicit poetry version ([`92f85ab`](https://github.com/Nr18/cfn-guard-test/commit/92f85ab777c8938977727c10c7d6e26e0e4699f6))
