@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cfn-guard-test"
-version = "0.6.1"
+version = "0.6.2"
 description = "cfn-guard-test is a wrapper for cfn-guard that allows you to run unit tests for your cfn-guard rules."
 authors = ["Joris Conijn <joris@conijnonline.nl>"]
 license = "MIT"

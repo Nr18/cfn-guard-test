@@ -30,10 +30,14 @@ run:
 .PHONY: patch
 patch:
 	semantic-release --patch version
+	git add pyproject.toml cfn_guard_test/__init__.py
+	git commit -m "chore: trigger new release"
 
 .PHONY: minor
 minor:
 	semantic-release --minor version
+	git add pyproject.toml cfn_guard_test/__init__.py
+	git commit -m "chore: trigger new release"
 
 .PHONY: complexity
 complexity:
