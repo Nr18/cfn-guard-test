@@ -14,7 +14,6 @@ class CfnGuardReport:
     __suites: List[TestSuite]
 
     def __init__(self, suites: CfnGuardTestSuites):
-
         self.__suites = []
 
         for suite in suites.all_suites:
