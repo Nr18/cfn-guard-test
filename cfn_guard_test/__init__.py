@@ -38,7 +38,6 @@ def resolve_paths(ctx: click.Context, _: click.Option, value: Optional[str]) -> 
 def validate_writable_path(
     ctx: click.Context, _: click.Option, value: Optional[str]
 ) -> Optional[str]:
-
     try:
         if value:
             with open(value, "w") as fh:
@@ -52,7 +51,7 @@ def validate_writable_path(
     return value
 
 
-@click.command()
+@click.command()  # type: ignore
 @click.option("-r", "--rules-path", callback=resolve_paths)
 @click.option("-t", "--test-path", callback=resolve_paths)
 @click.option("--cfn-guard-path", callback=validate_cfn_guard_path)
@@ -92,7 +91,6 @@ def main(
 
 
 def display_failures_errors(suites: CfnGuardTestSuites) -> None:
-
     if suites.errors:
         click.echo(click.style("Errors:", bold=True))
         list(map(click.echo, suites.error_messages))
@@ -109,7 +107,3 @@ def display_failures_errors(suites: CfnGuardTestSuites) -> None:
 
 def resolve_output_callback(verbose) -> Optional[Callable[[str], None]]:
     return click.echo if verbose else None
-
-
-if __name__ == "__main__":
-    main()
