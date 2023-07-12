@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.1 (2023-07-12)
+
+### Fix
+
+* Update dependencies ([#110](https://github.com/Nr18/cfn-guard-test/issues/110)) ([`6c7a099`](https://github.com/Nr18/cfn-guard-test/commit/6c7a0993717450cdfbb47c50784d685a83d19de1))
+
 ## v0.7.0 (2023-06-15)
 
 ### Feature
