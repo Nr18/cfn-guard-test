@@ -21,7 +21,7 @@ setuptools.setup(
     package_dir={"": "."},
     packages=setuptools.find_packages(where="."),
     install_requires=[
-        "click==8.1.6",
+        "click==8.1.7",
         "junit-xml==1.9",
     ],
     entry_points={
