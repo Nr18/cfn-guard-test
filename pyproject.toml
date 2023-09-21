@@ -19,7 +19,7 @@ pytest-mypy = "^0.10.3"
 toml = "^0.10.2"
 types-toml = "^0.10.8"
 xenon = "^0.9.1"
-radon = "^5.1.0"
+radon = "^6.0.1"
 python-semantic-release = "^8.1.1"
 
 [tool.poetry.scripts]
