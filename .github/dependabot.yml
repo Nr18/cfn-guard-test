@@ -9,9 +9,3 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-    assignees:
-      - "Nr18"
-#    groups:
-#       dependencies:
-#          patterns:
-#            - "*"
