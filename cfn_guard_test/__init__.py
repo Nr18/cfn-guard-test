@@ -11,7 +11,7 @@ from cfn_guard_test.suites import CfnGuardTestSuites
 from cfn_guard_test.reader import CfnGuardReader
 
 
-__version__ = "0.8.2"
+__version__ = "0.8.3"
 
 
 def validate_cfn_guard_path(
