@@ -4707,6 +4707,10 @@ By submitting this pull request, I confirm that you can use, modify,
 copy, and redistribute this contribution, under the terms of your
 choice. ([`250e7b9`](https://github.com/Nr18/cfn-guard-test/commit/250e7b9be0f06f7a50d45332a0f99da236f0af46))
 
+### Fix
+
+* fix: trigger release ([`7a86b1d`](https://github.com/Nr18/cfn-guard-test/commit/7a86b1d66b455e0cf21ffa01bbf194b942cfa5b6))
+
 ### Unknown
 
 * Update auto-merge.yml ([`2da6485`](https://github.com/Nr18/cfn-guard-test/commit/2da64855361185532962697f0920bfab418b21bd))
