@@ -13,13 +13,7 @@ We welcome you to use the GitHub issue tracker to report bugs, suggest features,
 When filing an issue, please check existing open, or recently closed, issues to make sure somebody else hasn't already
 reported the issue. Please try to include as much information as you can.
 
-
 ## Releases
 
-First you will need to update the `version` in the [`pyproject.toml`](./pyproject.toml) file.
-Next you need to merge these changes into the `develop` branch using a pull request.
+Releases should automatically be created based on the used commit messages.
 
-You need to create a pull request from `develop` to `main` and merge it. This will trigger the GitHub Actions [`release`](.github/workflows/release.yml)
-workflow.
-
-All done!
