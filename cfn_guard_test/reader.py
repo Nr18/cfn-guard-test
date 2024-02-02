@@ -60,7 +60,7 @@ class CfnGuardReader:
 
     @staticmethod
     def __get_case_name(test_case: str) -> Optional[str]:
-        match = re.search(r"Name: \"(.*)\"", test_case, re.MULTILINE)
+        match = re.search(r"Name: (.*)", test_case, re.MULTILINE)
         return match.group(1) if match else None
 
     @staticmethod
