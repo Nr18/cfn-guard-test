@@ -2,6 +2,13 @@
 
 
 
+## v0.8.2 (2024-02-02)
+
+### Fix
+
+* fix: trigger new release expect v0.8.2 ([`b159c75`](https://github.com/Nr18/cfn-guard-test/commit/b159c752bf70376733b2222ba029aec025debd2a))
+
+
 ## v0.8.1 (2024-02-02)
 
 ### Fix
