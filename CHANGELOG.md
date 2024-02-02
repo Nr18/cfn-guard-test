@@ -2,6 +2,13 @@
 
 
 
+## v0.8.1 (2024-02-02)
+
+### Fix
+
+* fix: bump version manually ([`c993504`](https://github.com/Nr18/cfn-guard-test/commit/c9935044f111cb192b3fb0cf509e475b0b649267))
+
+
 ## v0.8.0 (2024-02-02)
 
 ### Chore
