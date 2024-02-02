@@ -91,3 +91,4 @@ cfn-guard-test \
 
 [cfn-guard]: https://github.com/aws-cloudformation/cloudformation-guard "AWS CloudFormation Guard"
 [cfn-guard-test]: https://github.com/Nr18/cfn-guard-test "CloudFormation Guard Test"
+
