@@ -3,7 +3,7 @@
 	<testsuite disabled="0" errors="1" failures="0" name="rules/iam.guard" skipped="0" tests="1" time="0.5">
 		<testcase name="Loading Error" time="0.500000">
 			<error type="error" message="Unable to read the output when testing 'rules/iam.guard'!">Test Case #A
-Name: &quot;Rule Name&quot;
+Name: Rule Name
   PASS Rules:
     Rule: Expected = PASS, Evaluated = [PASS]</error>
 		</testcase>
